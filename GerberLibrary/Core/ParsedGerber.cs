@@ -6,7 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using TriangleNet.Geometry;
-using static GerberLibrary.PolyLineSet;
+//using GerberLibrary.PolyLineSet;
 using ClipperPolygon = System.Collections.Generic.List<ClipperLib.IntPoint>;
 using Polygons = System.Collections.Generic.List<System.Collections.Generic.List<ClipperLib.IntPoint>>;
 
@@ -121,7 +121,7 @@ namespace GerberLibrary.Core
         public List<PolyLine> DisplayShapes = new List<PolyLine>();
         public List<PolyLine> OutlineShapes = new List<PolyLine>();
 
-        public Bounds BoundingBox = new Bounds();
+        public PolyLineSet.Bounds BoundingBox = new PolyLineSet.Bounds();
         public BoardSide Side;
         public BoardLayer Layer;
         public string Name;
@@ -243,7 +243,7 @@ namespace GerberLibrary.Core
             foreach (var a in OutlineShapes)
             {
                 var area = Core.Helpers.PolygonSurfaceArea(a.Vertices);
-                var bounds = new Bounds();
+                var bounds = new PolyLineSet.Bounds();
                 bounds.FitPoint(a.Vertices);
                 Polies.Add(new Tuple<double, PolyLine>(bounds.Area(), a));
             }

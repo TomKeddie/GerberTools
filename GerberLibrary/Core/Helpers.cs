@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static GerberLibrary.PolyLineSet;
+//using GerberLibrary.PolyLineSet;
 
 namespace GerberLibrary.Core
 {
@@ -159,7 +159,7 @@ namespace GerberLibrary.Core
                             bool dumpdebugline = false;
                             if (dumpdebugline)
                             {
-                                Bounds Bbox = new Bounds();
+                                PolyLineSet.Bounds Bbox = new PolyLineSet.Bounds();
 
                                 foreach (var v in a.Vertices)
                                 {
@@ -318,7 +318,7 @@ namespace GerberLibrary.Core
         {
             List<PathDefWithClosed> Res = new List<PathDefWithClosed>();
             QuadTreeNode Root = new QuadTreeNode();
-            Bounds B = new Bounds();
+            PolyLineSet.Bounds B = new PolyLineSet.Bounds();
             for (int i = 0; i < Paths.Count; i++)
             {
                 if (Paths[i].Closed == false)
@@ -427,7 +427,7 @@ namespace GerberLibrary.Core
         {
             highestnomatch = 0;
             QuadTreeNode Root = new QuadTreeNode();
-            Bounds B = new Bounds();
+            PolyLineSet.Bounds B = new PolyLineSet.Bounds();
             for (int i = startat; i < Paths.Count; i++)
             {
                 if (Paths[i].Closed == false)
@@ -654,7 +654,7 @@ namespace GerberLibrary.Core
         private static int FindNextClosest(List<PathDefWithClosed> Paths)
         {
             QuadTreeNode Root = new QuadTreeNode();
-            Bounds B = new Bounds();
+            PolyLineSet.Bounds B = new PolyLineSet.Bounds();
             for (int i = 0; i < Paths.Count; i++)
             {
                 if (Paths[i].Closed == false)

@@ -242,6 +242,7 @@ namespace GerberLibrary
         {
             Side = BoardSide.Unknown;
             Layer = BoardLayer.Unknown;
+            string filename = Path.GetFileName(gerberfile);
             string[] filesplit = Path.GetFileName( gerberfile).Split('.');
             string ext = filesplit[filesplit.Count() - 1].ToLower();
             switch (ext)
@@ -316,6 +317,22 @@ namespace GerberLibrary
                             if (gerberfile.ToLower().Contains("-f_mask")) { Side = BoardSide.Top; Layer = BoardLayer.SolderMask; }
                             if (gerberfile.ToLower().Contains("-b_paste")) { Side = BoardSide.Bottom; Layer = BoardLayer.Paste; }
                             if (gerberfile.ToLower().Contains("-f_paste")) { Side = BoardSide.Top; Layer = BoardLayer.Paste; }
+
+                            if (Side == BoardSide.Unknown && Layer == BoardLayer.Unknown)
+                            {
+                                //- Kicad possibility
+                                if (filename.ToLower().Contains("outline")) { Side = BoardSide.Both; Layer = BoardLayer.Outline; }
+                                if (filename.ToLower().Contains("-edge.cuts")) { Side = BoardSide.Both; Layer = BoardLayer.Outline; }
+
+                                if (filename.ToLower().Contains("-b.cu")) { Side = BoardSide.Bottom; Layer = BoardLayer.Copper; }
+                                if (filename.ToLower().Contains("-f.cu")) { Side = BoardSide.Top; Layer = BoardLayer.Copper; }
+                                if (filename.ToLower().Contains("-b.silks")) { Side = BoardSide.Bottom; Layer = BoardLayer.Silk; }
+                                if (filename.ToLower().Contains("-f.silks")) { Side = BoardSide.Top; Layer = BoardLayer.Silk; }
+                                if (filename.ToLower().Contains("-b.mask")) { Side = BoardSide.Bottom; Layer = BoardLayer.SolderMask; }
+                                if (filename.ToLower().Contains("-f.mask")) { Side = BoardSide.Top; Layer = BoardLayer.SolderMask; }
+                                if (filename.ToLower().Contains("-b.paste")) { Side = BoardSide.Bottom; Layer = BoardLayer.Paste; }
+                                if (filename.ToLower().Contains("-f.paste")) { Side = BoardSide.Top; Layer = BoardLayer.Paste; }
+                            }
                             break;
 
                     }

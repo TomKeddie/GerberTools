@@ -13,7 +13,7 @@ using Polygon = System.Collections.Generic.List<ClipperLib.IntPoint>;
 using Polygons = System.Collections.Generic.List<System.Collections.Generic.List<ClipperLib.IntPoint>>;
 using GerberLibrary.Core;
 using GerberLibrary.Core.Primitives;
-using static GerberLibrary.PolyLineSet;
+//using GerberLibrary.PolyLineSet;
 
 namespace GerberLibrary
 {

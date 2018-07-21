@@ -1577,7 +1577,19 @@ namespace GerberLibrary
                 if (ext == "xln") ext = "txt";
                 if (FilesPerExt.ContainsKey(ext) == false)
                 {
-                    FilesPerExt[ext] = new List<string>();
+                    //-- kicad mod
+                    if ( s.ToLower().Contains("-b.cu" + ext )){ ext = "-B.Cu" + ext;}
+                    if (s.ToLower().Contains("-b.mask" + ext)) { ext = "-B.Mask" + ext; }
+                    if (s.ToLower().Contains("-b.paste" + ext)) { ext = "-B.Paste" + ext; }
+                    if (s.ToLower().Contains("-b.silks" + ext)) { ext = "-B.SilkS" + ext; }
+                    if (s.ToLower().Contains("-f.cu" + ext)) { ext = "-F.Cu" + ext; }
+                    if (s.ToLower().Contains("-f.mask" + ext)) { ext = "-F.Mask" + ext; }
+                    if (s.ToLower().Contains("-f.paste" + ext)) { ext = "-F.Paste" + ext; }
+                    if (s.ToLower().Contains("-f.silks" + ext)) { ext = "-F.SilkS" + ext; }
+                    if (s.ToLower().Contains("-edge.cuts" + ext)) { ext = "-Edge.Cuts" + ext; }
+
+                    if (FilesPerExt.ContainsKey(ext) == false)
+                        FilesPerExt[ext] = new List<string>();
                 }
 
                 FileTypePerExt[ext] = Gerber.FindFileType(s);
