@@ -1526,11 +1526,11 @@ namespace GerberLibrary
             FinalPolygonsWithTabs = Helpers.LineSegmentsToPolygons(SourceLines, true);
         }
 
-        public List<string> SaveOutlineTo(string p, string combinedfilename)
+        public List<string> SaveOutlineTo(string p, string combinedfilename , String extension)
         {
             List<string> R = new List<string>();
-            string DrillFile = Path.Combine(p, "tabdrills.TXT");
-            string OutlineFile = Path.Combine(p, combinedfilename + ".GKO");
+            string DrillFile = Path.Combine(p, "tabdrills.drl");
+            string OutlineFile = Path.Combine(p, combinedfilename + extension);
             R.Add(DrillFile);
             //  R.Add(OutlineFile);
             ExcellonFile EF = new ExcellonFile();
@@ -1553,6 +1553,11 @@ namespace GerberLibrary
             GOW.Write(Path.Combine(p, OutlineFile));
 
             return R;
+        }
+
+        public List<string> SaveOutlineTo(string p, string combinedfilename)
+        {
+            return SaveOutlineTo(p, combinedfilename , ".GKO");
         }
 
         public List<String> SaveGerbersToFolder(string BaseName, string targetfolder, ProgressLog Logger, bool SaveOutline = true, bool GenerateImages = true, bool DeleteGenerated = true, string combinedfilename = "combined")
@@ -1611,11 +1616,19 @@ namespace GerberLibrary
                         break;
                     case BoardFileType.Gerber:
                         {
-                            if (a.Key.ToLower() != ".gko")
+                            if ((a.Key.ToLower() != ".gko") && (a.Key.ToLower().Contains("-edge.cuts") == false ))
                             {
                                 string Filename = Path.Combine(targetfolder, combinedfilename + a.Key);
                                 FinalFiles.Add(Filename);
                                 GerberMerger.MergeAll(a.Value, Filename, Logger);
+                            }
+                            else if ( a.Key.ToLower().Contains("-edge.cuts") == true )
+                            {
+                                if ( File.Exists(targetfolder + "/" +  combinedfilename + "-Edge.Cuts" + ".gbr" ))
+                                {
+                                    File.Delete(targetfolder + "/" +  combinedfilename + "-Edge.Cuts" + ".gbr");
+                                }
+                                File.Move( targetfolder + "/" + combinedfilename + ".gko" , targetfolder + "/" +  combinedfilename + "-Edge.Cuts" + ".gbr");
                             }
                         }
                         break;
